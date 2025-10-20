@@ -1,6 +1,8 @@
-FROM php:8.2.7-fpm-alpine3.18
+#FROM php:8.2.7-fpm-alpine3.18
+FROM php:8.4-fpm-alpine3.22
 
-LABEL maintainer="Ric Harvey <ric@squarecows.com>"
+LABEL maintainer="Yaakov Shalva <yaccovs@gmail.com>"
+LABEL original_maintainer="Ric Harvey <ric@squarecows.com>"
 
 ENV php_conf /usr/local/etc/php-fpm.conf
 ENV fpm_conf /usr/local/etc/php-fpm.d/www.conf
@@ -69,7 +71,7 @@ RUN apk add --no-cache --virtual .sys-deps \
       --with-freetype \
       --with-jpeg && \
     docker-php-ext-install gd && \
-     pip install --upgrade pip && \
+     pip install --break-system-packages --upgrade pip && \
     docker-php-ext-install pdo_mysql mysqli pdo_sqlite pgsql pdo_pgsql exif intl xsl soap zip && \
     pecl install -o -f xdebug && \
     pecl install -o -f redis && \ 
@@ -85,7 +87,7 @@ RUN apk add --no-cache --virtual .sys-deps \
     php composer-setup.php --quiet --install-dir=/usr/bin --filename=composer && \
     rm composer-setup.php &&\
   #  pip3 install -U pip && \
-    pip3 install -U certbot && \
+    pip3 install --break-system-packages -U certbot && \
     mkdir -p /etc/letsencrypt/webrootauth && \
     apk del gcc musl-dev linux-headers libffi-dev augeas-dev python3-dev make autoconf && \
     apk del .sys-deps
