@@ -134,7 +134,11 @@ if [ -f /etc/nginx/sites-available/default-ssl.conf ]; then
 fi
 
 # Set the desired timezone
-echo date.timezone=Europe/London > /usr/local/etc/php/conf.d/timezone.ini
+if [ -f /etc/TZ ]; then
+  echo date.timezone=$(cat /etc/TZ) > /usr/local/etc/php/conf.d/timezone.ini
+else
+  echo date.timezone=Europe/London > /usr/local/etc/php/conf.d/timezone.ini
+fi
 
 # Display errors in docker logs
 if [ ! -z "$PHP_ERRORS_STDERR" ]; then
