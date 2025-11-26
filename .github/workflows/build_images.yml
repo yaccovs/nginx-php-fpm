@@ -16,7 +16,7 @@ jobs:
       - name: Prepare
         id: prep
         run: |
-          DOCKER_IMAGE=${{ secrets.DOCKER_USERNAME }}/${GITHUB_REPOSITORY#*/}
+          DOCKER_IMAGE=${{ secrets.DOCKERHUB_USERNAME }}/${GITHUB_REPOSITORY#*/}
           VERSION=8.4-latest
           SHORTREF=${GITHUB_SHA::8}
 
